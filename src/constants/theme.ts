@@ -1,6 +1,5 @@
 export default {
 	dark: {
-		name: "dark",
 		section: "#2C2C2C",
 		sideBar: "#353535",
 		font: "#fff",

@@ -1,11 +1,17 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import FloatMenu from "./components/FloatMenu";
+import { GlobalStyle } from "./GlobalStyle";
+import Home from "./pages/Home";
+
 
 function App() {
+  
   return (
-    <div className="App">
-      <h1>Home page</h1>
-    </div>
+    <>
+      <GlobalStyle />
+      <Home />
+      <FloatMenu />
+    </>
   );
 }
 
