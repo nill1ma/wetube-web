@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useState } from "react";
 import Finder from "../../components/Finder";
 import VideoBox from "../../components/VideoBox";
 import { Videos } from "../../models/videos";
@@ -12,13 +12,14 @@ export default function Home() {
 
   async function getVideos() {
     const { items, nextPageToken, prevPageToken } = await findVideos(keyWord);
+    console.log(items, '==>> ITEMS')
     const videos = mountRecentVideosResearched(items);
     setVideos([...videos]);
     save(videos);
   }
 
   const handleKeyWord = (e: string) => {
-      setKeyWord(e);
+    setKeyWord(e);
   };
 
   const mountRecentVideosResearched = (response: IYoutube[]) => {
@@ -42,7 +43,7 @@ export default function Home() {
         {videos
           .filter((_, index: number) => index === 0)
           .map((item: Videos) => (
-            <VideoBox current={true} video={item} />
+            <VideoBox key={item.id} current={true} video={item} />
           ))}
       </CurrentVideo>
       <SuggestionedVideos>

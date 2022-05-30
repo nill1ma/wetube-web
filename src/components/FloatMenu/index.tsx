@@ -18,7 +18,7 @@ export default function FloatMenu() {
     <Container>
       {menu.map((item: Menu) => {
         return (
-          <div>
+          <div key={item.label}>
             <Icon icon={item.icon} />
             <span>{item.label}</span>
           </div>
