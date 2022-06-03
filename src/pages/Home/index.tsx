@@ -1,18 +1,23 @@
 import React, { useState } from "react";
-import Finder from "../../components/Finder";
+import Header from "../../components/Header";
 import VideoBox from "../../components/VideoBox";
 import { Videos } from "../../models/videos";
 import { IYoutube } from "../../models/youtube";
 import { get, save } from "../../services/firebase";
 import { findVideos } from "../../services/youtube";
-import { Container, CurrentVideo, SuggestionedVideos } from "./styles";
+import { Container, Content } from "./styles";
 export default function Home() {
   const [videos, setVideos] = useState<Videos[]>(get());
   const [keyWord, setKeyWord] = useState<string>("");
-
-  async function getVideos() {
-    const { items, nextPageToken, prevPageToken } = await findVideos(keyWord);
-    console.log(items, '==>> ITEMS')
+  const [prev, setPrev] = useState("");
+  const [next, setNext] = useState("");
+  async function getVideos(pageToken?: string) {
+    const { items, nextPageToken, prevPageToken } = await findVideos(
+      keyWord,
+      pageToken
+    );
+    setNext(nextPageToken);
+    prevPageToken && setPrev(prevPageToken);
     const videos = mountRecentVideosResearched(items);
     setVideos([...videos]);
     save(videos);
@@ -38,21 +43,12 @@ export default function Home() {
 
   return (
     <Container>
-      <CurrentVideo>
-        <Finder handleKeyWord={handleKeyWord} action={getVideos} />
-        {videos
-          .filter((_, index: number) => index === 0)
-          .map((item: Videos) => (
-            <VideoBox key={item.id} current={true} video={item} />
-          ))}
-      </CurrentVideo>
-      <SuggestionedVideos>
-        {videos
-          .filter((_, index: number) => index !== 0)
-          .map((item: Videos) => (
-            <VideoBox current={false} video={item} />
-          ))}
-      </SuggestionedVideos>
+      <Header handleKeyWord={handleKeyWord} action={getVideos} prev={prev} next={next} />
+      <Content>
+        {videos.map((item: Videos) => (
+          <VideoBox key={item.id} video={item} />
+        ))}
+      </Content>
     </Container>
   );
 }

@@ -1,36 +1,33 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactPlayer from "react-player";
-import YouTube from "react-youtube";
 import styled from "styled-components";
-import React from "react";
 
 type VideoBoxContainerProps = {
-	current: boolean;
+  current: boolean;
 };
 
-export const Container = styled.div<VideoBoxContainerProps>`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	height: ${({ current }) => current && "calc(100% - 70px)"};
-	align-items: center;
-	color: #ffffff;
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(30% - 20px);
+  height: calc(50% - 100px);
+  color: #ffffff;
+  background-color: rgba(235, 149, 50, 0.8);
+  font-weight: bold;
+  padding: 10px 10px 0 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  div {
+    padding: 10px 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
-export const Video = styled(ReactPlayer)`
-	/* display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	padding: 10px; */
-	/* background-color: orange; */
-	/* border-radius: 10px; */
-`;
-export const opts = {
-	height: "500",
-	width: "1000",
-};
+export const Video = styled(ReactPlayer)``;
 
-export const optsNoCurrent = {
-	height: "200",
-	width: "400",
-};
+export const Icon = styled(FontAwesomeIcon)`
+  cursor: pointer;
+`;

@@ -5,23 +5,23 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
-import { Container, Icon } from "./styles";
+import { Container, Icon, MenuItem } from "./styles";
 
 export default function FloatMenu() {
   const [menu, setMenu] = useState<Menu[]>([
-    { label: "Home", active: true, icon: faHome },
-    { label: "Faforites", active: false, icon: faStar },
-    { label: "Playlists", active: false, icon: faClipboardList },
+    { label: "Home", active: true, icon: faHome, path:'/' },
+    { label: "Faforites", active: false, icon: faStar, path:'favorites' },
+    { label: "Playlists", active: false, icon: faClipboardList, path:'playlists' },
   ]);
 
   return (
     <Container>
-      {menu.map((item: Menu) => {
+      {menu.map(({label, active, icon, path}: Menu) => {
         return (
-          <div key={item.label}>
-            <Icon icon={item.icon} />
-            <span>{item.label}</span>
-          </div>
+          <MenuItem to={path} key={label}>
+            <Icon icon={icon} />
+            <span>{label}</span>
+          </MenuItem>
         );
       })}
     </Container>
@@ -32,4 +32,5 @@ type Menu = {
   label: string;
   active: boolean;
   icon: IconDefinition;
+  path:string;
 };
